@@ -1,2 +1,1 @@
-# jagaad-php-test
- Jagaad - Backend PHP tech homework 
+# Jagaad - Backend PHP tech homework
