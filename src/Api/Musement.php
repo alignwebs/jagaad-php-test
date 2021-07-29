@@ -1,6 +1,6 @@
 <?php
 
-namespace Musement;
+namespace Alignwebs\Api;
 
 class Musement
 {
