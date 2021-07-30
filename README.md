@@ -12,6 +12,6 @@ Gulzar Ahmed from Jagaad
 
 ## Steps
 
-- Set WEATHER_API_KEY env in Dockerfile
+- Set `WEATHER_API_KEY` ENV variable in `Dockerfile`
 - `$ docker build -t alignwebs-jagaad-php-test .`
 - `$ docker run -it --rm alignwebs-jagaad-php-test`
