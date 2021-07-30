@@ -4,11 +4,10 @@ Gets the list of the cities from Musement's API for each city gets the forecast 
 
 ## Requirements
 
-- Composer
+- Docker
 
 ## Steps
 
-- Run `composer install`
-- Copy .env.example as .env
-- Set weatherapi.com api key in .env
-- Execute `php run.php`
+- Set WEATHER_API_KEY env in Dockerfile
+- `$ docker build -t alignwebs-jagaad-php-test .`
+- `$ docker run -it --rm alignwebs-jagaad-php-test`
