@@ -2,6 +2,8 @@
 
 namespace Alignwebs\Api;
 
+use Alignwebs\Traits\HttpClient;
+
 class WeatherApi
 {
     const API_ENDPOINT_V1 = "http://api.weatherapi.com/v1";
@@ -15,8 +17,8 @@ class WeatherApi
 
     public function getWeatherForecast(float $lat, float $lon, $days = 1): array
     {
-        $forecast = file_get_contents(self::API_ENDPOINT_V1 . "/forecast.json?key={$this->API_KEY}&q={$lat},{$lon}&days={$days}");
-        $forecast = json_decode($forecast, true);
-        return $forecast;
+        $forecast_data = HttpClient::get(self::API_ENDPOINT_V1 . "/forecast.json?key={$this->API_KEY}&q={$lat},{$lon}&days={$days}");
+        $forecast_data = json_decode($forecast_data, true);
+        return $forecast_data;
     }
 }
