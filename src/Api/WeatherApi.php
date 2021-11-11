@@ -17,8 +17,13 @@ class WeatherApi
 
     public function getWeatherForecast(float $lat, float $lon, $days = 1): array
     {
-        $forecast_data = HttpClient::get(self::API_ENDPOINT_V1 . "/forecast.json?key={$this->API_KEY}&q={$lat},{$lon}&days={$days}");
+        $forecast_data = HttpClient::get(self::API_ENDPOINT_V1 . "/foreddcast.json?key={$this->API_KEY}&q={$lat},{$lon}&days={$days}");
         $forecast_data = json_decode($forecast_data, true);
+
+        if (isset($forecast_data['error'])) {
+            throw new \Exception($forecast_data['error']['message']);
+        }
+
         return $forecast_data;
     }
 }

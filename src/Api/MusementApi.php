@@ -2,13 +2,14 @@
 
 namespace Alignwebs\Api;
 
+use Alignwebs\Dto\MusementCityDto;
 use Alignwebs\Traits\HttpClient;
 
 class MusementApi
 {
     const API_ENDPOINT_V3 = "https://api.musement.com/api/v3";
 
-    public function getCities()
+    public function getCities(): array
     {
         $cities_data = HttpClient::get(self::API_ENDPOINT_V3 . "/cities");
         $cities_data = json_decode($cities_data, true);
@@ -19,11 +20,11 @@ class MusementApi
         }
 
         $cities_data = array_map(function ($city) {
-            return [
+            return new MusementCityDto([
                 'name' => $city['name'],
                 'latitude' => $city['latitude'],
                 'longitude' => $city['longitude'],
-            ];
+            ]);
         }, $cities_data);
 
         return $cities_data;
