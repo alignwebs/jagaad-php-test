@@ -3,11 +3,11 @@
 require 'src/bootstrap.php';
 
 // Get the list of the cities from Musement's API
-$musement = new Alignwebs\Api\Musement();
+$musement = new Alignwebs\Api\MusementApi();
 $cities = $musement->getCities();
 
 // For each city gets the forecast for the next 2 days.
-$weather = new Alignwebs\Api\Weather($_ENV['WEATHER_API_KEY']);
+$weather = new Alignwebs\Api\WeatherApi($_ENV['WEATHER_API_KEY']);
 
 foreach ($cities as $city) {
     $forecast = $weather->getWeatherForecast($city['latitude'], $city['longitude'], 2);

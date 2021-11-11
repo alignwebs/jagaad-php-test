@@ -2,7 +2,7 @@
 
 namespace Alignwebs\Api;
 
-class Musement
+class MusementApi
 {
     const API_ENDPOINT_V3 = "https://api.musement.com/api/v3";
 

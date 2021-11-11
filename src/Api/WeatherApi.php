@@ -2,7 +2,7 @@
 
 namespace Alignwebs\Api;
 
-class Weather
+class WeatherApi
 {
     const API_ENDPOINT_V1 = "http://api.weatherapi.com/v1";
 
