@@ -1,6 +1,6 @@
 <?php
 
-namespace Alignwebs\Traits;
+namespace Alignwebs\Helpers;
 
 class HttpClient
 {

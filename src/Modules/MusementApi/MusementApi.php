@@ -1,9 +1,8 @@
 <?php
 
-namespace Alignwebs\Api;
+namespace Alignwebs\Modules\MusementApi;
 
-use Alignwebs\Dto\MusementCityDto;
-use Alignwebs\Traits\HttpClient;
+use Alignwebs\Helpers\HttpClient;
 
 class MusementApi
 {
@@ -20,7 +19,7 @@ class MusementApi
         }
 
         $cities_data = array_map(function ($city) {
-            return new MusementCityDto([
+            return new MusementCityDTO([
                 'name' => $city['name'],
                 'latitude' => $city['latitude'],
                 'longitude' => $city['longitude'],

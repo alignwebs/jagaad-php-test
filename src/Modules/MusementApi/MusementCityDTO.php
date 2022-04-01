@@ -1,8 +1,8 @@
 <?php
 
-namespace Alignwebs\Dto;
+namespace Alignwebs\Modules\MusementApi;
 
-class MusementCityDto
+class MusementCityDTO
 {
     public string $name;
     public float $latitude;
