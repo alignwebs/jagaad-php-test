@@ -12,7 +12,7 @@ function process(): void
     $cities = $musement->getCities();
 
     // For each city gets the forecast for the next 2 days.
-    $weather_api = new WeatherApi("f20eb7a39a0b402dad1173835212907");
+    $weather_api = new WeatherApi($_ENV['WEATHER_API_KEY']);
 
     foreach ($cities as $musement_city_dto) {
         $forecast = $weather_api->getWeatherForecast($musement_city_dto->latitude, $musement_city_dto->longitude, 2);
