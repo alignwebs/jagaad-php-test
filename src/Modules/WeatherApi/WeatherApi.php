@@ -15,7 +15,7 @@ class WeatherApi
         $this->API_KEY = $apiKey;
     }
 
-    public function getWeatherForecast(float $lat, float $lon, $days = 1): array
+    public function fetchWeatherForecast(float $lat, float $lon, $days = 1): WeatherForecastDaysCollection
     {
         $forecast_data = HttpClient::get(self::API_ENDPOINT_V1 . "/forecast.json?key={$this->API_KEY}&q={$lat},{$lon}&days={$days}");
         $forecast_data = json_decode($forecast_data, true);
@@ -24,11 +24,15 @@ class WeatherApi
             throw new \Exception($forecast_data['error']['message']);
         }
 
-        $weather_forcecast = array_map(fn ($forecast) =>  new WeatherForecastDayDTO([
-            'date' => $forecast['date'],
-            'condition' => $forecast['day']['condition']['text'],
-        ]), $forecast_data['forecast']['forecastday']);
+        $forecast_days_collection = new WeatherForecastDaysCollection();
 
-        return $weather_forcecast;
+        foreach ($forecast_data['forecast']['forecastday'] as $forecast) {
+            $forecast_days_collection->add(new WeatherForecastDayDTO([
+                'date' => $forecast['date'],
+                'condition' => $forecast['day']['condition']['text'],
+            ]));
+        }
+
+        return $forecast_days_collection;
     }
 }

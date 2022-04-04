@@ -8,7 +8,7 @@ class MusementApi
 {
     const API_ENDPOINT_V3 = "https://api.musement.com/api/v3";
 
-    public function getCities(): array
+    public function fetchCities(): MusementCitiesCollection
     {
         $cities_data = HttpClient::get(self::API_ENDPOINT_V3 . "/cities");
         $cities_data = json_decode($cities_data, true);
@@ -18,14 +18,15 @@ class MusementApi
             throw new \Exception($cities_data['message']);
         }
 
-        $cities_data = array_map(function ($city) {
-            return new MusementCityDTO([
+        $cities_collection = new MusementCitiesCollection();
+        foreach ($cities_data as $city) {
+            $cities_collection->add(new MusementCityDTO([
                 'name' => $city['name'],
                 'latitude' => $city['latitude'],
                 'longitude' => $city['longitude'],
-            ]);
-        }, $cities_data);
+            ]));
+        }
 
-        return $cities_data;
+        return $cities_collection;
     }
 }
