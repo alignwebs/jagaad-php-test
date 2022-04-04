@@ -2,22 +2,36 @@
 
 namespace Alignwebs\Helpers;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Psr7;
+
 class HttpClient
 {
+    private Client $client;
+
+    var $timeout = 1; // seconds
+
+    public function __construct()
+    {
+        $this->client = new Client();
+    }
+
     public static function get(string $url)
     {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $output = curl_exec($ch);
-        curl_close($ch);
+        $http_response = false;
+        try {
+            $request = new Request('GET',  $url);
+            $promise = (new self)->client->sendAsync($request)->then(function ($response) use (&$http_response) {
+                $http_response = $response->getBody();
+            });
 
-        // check if curl has error
-        if ($output === false) {
-            throw new \Exception('Curl error: ' . curl_error($ch));
+            $promise->wait();
+        } catch (ClientException $e) {
+            $http_response = "asdsa";
         }
 
-        return $output;
+        return $http_response;
     }
 }
