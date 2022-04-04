@@ -4,15 +4,15 @@ namespace Alignwebs\Modules\MusementApi;
 
 class MusementCitiesCollection
 {
-    private array $cities;
+    private array $data;
 
     public function add(MusementCityDTO $city)
     {
-        $this->cities[] = $city;
+        $this->data[] = $city;
     }
 
     public function get(): array
     {
-        return $this->cities;
+        return $this->data;
     }
 }
