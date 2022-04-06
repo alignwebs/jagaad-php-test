@@ -15,3 +15,7 @@ Gulzar Ahmed from Jagaad
 - Set `WEATHER_API_KEY` ENV variable in `Dockerfile`
 - `$ docker build -t alignwebs-jagaad-php-test .`
 - `$ docker run -it --rm alignwebs-jagaad-php-test`
+
+## Static Analyzer Result
+
+No Errors with PHP Stan till Level 8 
