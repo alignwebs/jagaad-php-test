@@ -20,7 +20,7 @@ class HttpClient
         ]);
     }
 
-    public static function get(string $url): string
+    public static function get(string $url): string|bool
     {
         $http_response = false;
         $request = new Request('GET',  $url);
