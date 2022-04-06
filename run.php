@@ -7,6 +7,7 @@ use Alignwebs\Apis\WeatherApi;
 
 function process(): void
 {
+    fwrite(STDOUT, "Processing..." . PHP_EOL . PHP_EOL);
     // Get the list of the cities from Musement's API
     $musement = new MusementApi();
     try {
@@ -42,6 +43,8 @@ try {
     // Main Function
     process();
 
+    // new line
+    fwrite(STDOUT, PHP_EOL);
     // Calculate memory usage
     $memory_usage_end = memory_get_usage();
     $memory_usage_diff = $memory_usage_end - $memory_usage_start;
