@@ -18,7 +18,7 @@ function process(): void
 
     // For each city gets the forecast for the next 2 days.
     $days = 2;
-    $weather_api = new WeatherApi($_ENV['WEATHER_API_KEY'] = "f20eb7a39a0b402dad1173835212907");
+    $weather_api = new WeatherApi($_ENV['WEATHER_API_KEY']);
 
     $weather_forecast_days_collection = $weather_api->fetchWeatherForecast($cities, $days);
 
