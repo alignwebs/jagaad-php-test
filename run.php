@@ -2,36 +2,57 @@
 
 require 'src/bootstrap.php';
 
-use Alignwebs\Modules\MusementApi\MusementApi;
-use Alignwebs\Modules\WeatherApi\WeatherApi;
+use Alignwebs\Apis\MusementApi;
+use Alignwebs\Apis\WeatherApi;
 
 function process(): void
 {
     // Get the list of the cities from Musement's API
     $musement = new MusementApi();
-    $cities = $musement->fetchCities();
+    try {
+        $cities = $musement->fetchCities();
+    } catch (\Exception $e) {
+        throw new \Exception("Error fetching cities from musement api: " . $e->getMessage());
+    }
 
     // For each city gets the forecast for the next 2 days.
     $days = 2;
-    $weather_api = new WeatherApi($_ENV['WEATHER_API_KEY']);
+    $weather_api = new WeatherApi($_ENV['WEATHER_API_KEY'] = "f20eb7a39a0b402dad1173835212907");
 
-    foreach ($cities->get() as $musement_city_dto) {
+    $weather_forecast_days_collection = $weather_api->fetchWeatherForecast($cities, $days);
 
-        $forecast = $weather_api->fetchWeatherForecast($musement_city_dto->latitude, $musement_city_dto->longitude, $days);
-
-        $weather = [];
-        foreach ($forecast->get() as $forecast_day_dto) {
-            $weather[] = $forecast_day_dto->condition;
+    foreach ($weather_forecast_days_collection as $forecast_day_dto) {
+        try {
+            $output = "Processed city {$forecast_day_dto->city} | " . implode(" - ", $forecast_day_dto->conditions);
+        } catch (\Exception $e) {
+            $output = "Error fetching forecast from weather api: " . $e->getMessage();
         }
 
-        $output = "Processed city {$musement_city_dto->name} | " . implode(" - ", $weather);
         fwrite(STDOUT, $output . PHP_EOL);
     }
 }
 
 
 try {
+    // start time
+    $start = microtime(true);
+    // get memory usage
+    $memory_usage_start = memory_get_usage();
+
+    // Main Function
     process();
+
+    // Calculate memory usage
+    $memory_usage_end = memory_get_usage();
+    $memory_usage_diff = $memory_usage_end - $memory_usage_start;
+    // ouput memory usage in MB
+    fwrite(STDOUT, "Memory usage: " . round($memory_usage_diff / 1024 / 1024, 2) . " MB" . PHP_EOL);
+    // end time
+    $end = microtime(true);
+    // execution time in seconds
+    $execution_time = $end - $start;
+    // ouput execution time in seconds
+    fwrite(STDOUT, "Execution time: " . round($execution_time, 2) . " seconds" . PHP_EOL);
 } catch (Exception $e) {
-    fwrite(STDOUT, "Error: " . $e->getMessage() . PHP_EOL);
+    fwrite(STDOUT, $e->getMessage() . PHP_EOL);
 }

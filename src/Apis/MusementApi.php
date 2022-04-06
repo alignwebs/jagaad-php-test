@@ -1,7 +1,9 @@
 <?php
 
-namespace Alignwebs\Modules\MusementApi;
+namespace Alignwebs\Apis;
 
+use Alignwebs\Collections\MusementCitiesCollection;
+use Alignwebs\DTOs\MusementCityDTO;
 use Alignwebs\Helpers\HttpClient;
 
 class MusementApi
@@ -11,6 +13,7 @@ class MusementApi
     public function fetchCities(): MusementCitiesCollection
     {
         $cities_data = HttpClient::get(self::API_ENDPOINT_V3 . "/cities");
+
         $cities_data = json_decode($cities_data, true);
 
         // Throw exception if response is not valid - Valid response is without "code" key
