@@ -7,7 +7,6 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Promise\EachPromise;
 
-
 class HttpClient
 {
     private Client $client;
