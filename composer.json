@@ -1,10 +1,15 @@
 {
     "require": {
-        "guzzlehttp/guzzle": "^7.4"
+        "guzzlehttp/guzzle": "^7.4",
+        "ramsey/collection": "^1.2",
+        "spatie/data-transfer-object": "^3.7"
     },
     "autoload": {
         "psr-4": {
             "Alignwebs\\": "src/"
         }
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.5"
     }
 }
